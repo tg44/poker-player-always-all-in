@@ -32,7 +32,7 @@ case class GameState(
                       tournament_id: String,
                      game_id: String,
                       round: Int,
-                      bet_index: Int,
+                      bet_index: Option[Int],
                       small_blind: Int,
                       orbits: Int,
                       dealer: Int,
