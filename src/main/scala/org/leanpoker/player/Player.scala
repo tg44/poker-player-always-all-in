@@ -78,7 +78,7 @@ case class GameState(
   }
 
   def affordableLoss: Boolean = {
-    current_buy_in < me.stack * 0.1
+    holdLicit < (me.stack+ me.bet) * 0.1
   }
 
   def playersInGame: Int = {
