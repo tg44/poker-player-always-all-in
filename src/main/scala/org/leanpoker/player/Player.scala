@@ -43,7 +43,8 @@ object Player extends JsonSupport {
       if (CardListHelper.midrangeHand(me.hole_cards.get) && me.bet > 0) state.holdLicit
       else 0
     } else {
-      if(CardListHelper.notSoBadHand(me.hole_cards.get)){
+      if (CardListHelper.midrangeHand(me.hole_cards.get)) me.stack
+      else if(CardListHelper.notSoBadHand(me.hole_cards.get)){
         state.holdLicit
       } else 0
     }
