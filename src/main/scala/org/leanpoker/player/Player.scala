@@ -10,15 +10,16 @@ object Player extends JsonSupport {
 
   def betRequest(request: JsValue): Int = {
     val state= request.convertTo[GameState]
-    println("REQUEST OBJECT >>>>>>>>>>>>" + request.prettyPrint);
+    println("REQUEST OBJECT >>>>>>>>>>>>" + request.prettyPrint)
     val response = generateResponse(state)
-    println("OUR RESPONSE >>>>>>>>>>>>" + response);
+    println("OUR RESPONSE >>>>>>>>>>>>" + response)
     response
   }
 
   def generateResponse(state: GameState): Int = {
     val me = GameStateHelper.me(state)
     if(CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
+    else if (CardListHelper.midrangeHand(me.hole_cards.get)) 200
     else 0
   }
 
