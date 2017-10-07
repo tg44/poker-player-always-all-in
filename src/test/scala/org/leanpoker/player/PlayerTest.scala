@@ -6,15 +6,8 @@ import spray.json._
 
 class PlayerTest extends FunSpec with MustMatchers with JsonSupport {
 
-  it("test bet request") {
-    val jsonElement = new JsonParser().parse("{\"key1\": \"value1\", \"key2\": \"value2\"}")
-    Player.betRequest(jsonElement) must be (100)
-  }
-
-  it("can parse json") {
-
-    val sample =
-      """{"players":[
+  val sample =
+    """{"players":[
     {
       "name":"Player 1",
       "stack":1000,
@@ -46,6 +39,15 @@ class PlayerTest extends FunSpec with MustMatchers with JsonSupport {
     "pot":0,
     "in_action": 1
   }"""
+
+  it("test bet request") {
+    val jsonElement = sample.parseJson
+    Player.betRequest(jsonElement) must be (100)
+  }
+
+  it("can parse json") {
+
+
 
     val inJson = sample.parseJson
     inJson.convertTo[GameState]

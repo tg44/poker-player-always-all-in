@@ -3,16 +3,17 @@ package org.leanpoker.player
 import com.google.gson.JsonElement
 import spray.json.{DefaultJsonProtocol, JsValue, RootJsonFormat}
 
-object
-
-Player {
+object Player extends JsonSupport {
 
   val VERSION = "Default Scala folding player"
 
-  def betRequest(request: JsonElement) = 100
+  def betRequest(request: JsValue) = {
+    val state= request.convertTo[GameState]
+    100
+  }
 
-  def showdown(game: JsonElement) {
-
+  def showdown(game: JsValue) {
+    val state= game.convertTo[GameState]
   }
 }
 

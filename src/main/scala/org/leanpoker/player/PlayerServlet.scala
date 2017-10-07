@@ -6,6 +6,7 @@ import com.google.gson.JsonParser
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import spray.json._
 
 @WebServlet(Array("/"))
 class PlayerServlet extends HttpServlet {
@@ -19,10 +20,10 @@ class PlayerServlet extends HttpServlet {
         req.getParameter("action") match {
           case "bet_request" =>
             val gameState = req.getParameter("game_state")
-            resp.getWriter().print(Player.betRequest(new JsonParser().parse(gameState)))
+            resp.getWriter().print(Player.betRequest(gameState.parseJson))
           case "showdown" =>
             val gameState = req.getParameter("game_state")
-            Player.showdown(new JsonParser().parse(gameState))
+            Player.showdown(gameState.parseJson)
           case _ =>
             resp.getWriter().print(Player.VERSION)
         }
