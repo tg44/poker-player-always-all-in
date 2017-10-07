@@ -39,6 +39,30 @@ case class GameState(
 
 case class Card(rank: String, suit: String)
 
+object CardSuit {
+  val hearts = "hearts";
+  val spades = "spades";
+  val clubs = "clubs";
+  val diamonds = "diamonds";
+}
+
+object CardRank {
+  val r1 = "1"
+  val r2 = "2"
+  val r3 = "3"
+  val r4 = "4"
+  val r5 = "5"
+  val r6 = "6"
+  val r7 = "7"
+  val r8 = "8"
+  val r9 = "9"
+  val r10 = "10"
+  val J = "J"
+  val Q = "Q"
+  val K = "K"
+  val A = "A"
+}
+
 trait JsonSupport extends DefaultJsonProtocol {
 
   implicit val cardJsonFormatter: RootJsonFormat[Card] = jsonFormat2(Card)
