@@ -20,11 +20,7 @@ object Player extends JsonSupport {
     val me = state.me
 
     if(state.playersInGame > 2) {
-      if(me.bet > 0) {
-        preFlopLogic(state)
-      } else {
         0
-      }
     }
 
 
