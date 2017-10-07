@@ -1,7 +1,3 @@
-poker-player-java
-=================
+URL FOR LOGGGING:
 
-Scala client skeleton for Lean Poker
-For more information visit: http://leanpoker.org
-
-This is a gradle project that can be imported into any IDE.
+http://lumber.leanpoker.org/logs/tournament/59ca433b77fe0f0004000002/team/poker-player-always-all-in/log?refresh=y
