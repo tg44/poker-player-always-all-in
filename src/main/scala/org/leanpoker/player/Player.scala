@@ -9,7 +9,7 @@ object Player extends JsonSupport {
 
   def betRequest(request: JsValue) = {
     val state= request.convertTo[GameState]
-    100
+    state.minimum_raise
   }
 
   def showdown(game: JsValue) {
@@ -38,7 +38,8 @@ case class GameState(
                       community_cards: Seq[Card],
                       current_buy_in: Int,
                       pot: Int,
-                      in_action: Int
+                      in_action: Int,
+                      minimum_raise: Int
                     )
 
 case class Card(rank: String, suit: String)
@@ -47,5 +48,5 @@ trait JsonSupport extends DefaultJsonProtocol {
 
   implicit val cardJsonFormatter: RootJsonFormat[Card] = jsonFormat2(Card)
   implicit val playerJsonFormatter: RootJsonFormat[PlayerDto] = jsonFormat7(PlayerDto)
-  implicit val gameStateJsonFormatter: RootJsonFormat[GameState] = jsonFormat12(GameState)
+  implicit val gameStateJsonFormatter: RootJsonFormat[GameState] = jsonFormat13(GameState)
 }
