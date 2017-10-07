@@ -16,7 +16,7 @@ object Player extends JsonSupport {
 
   def generateResponse(state: GameState): Int = {
     if(state.round == 0) 100
-    else state.players(state.in_action).stack
+    else state.players(state.in_action.get).stack
   }
 
   def showdown(game: JsValue) {
@@ -46,7 +46,7 @@ case class GameState(
                       current_buy_in: Int,
                       pot: Int,
                       in_action: Option[Int],
-                      minimum_raise: Int
+                      minimum_raise: Option[Int]
                     )
 
 case class Card(rank: String, suit: String)
