@@ -9,11 +9,18 @@ object Player extends JsonSupport {
   val VERSION = "haha we always all in xD"
 
   def betRequest(request: JsValue): Int = {
-    val state= request.convertTo[GameState]
-    println("REQUEST OBJECT >>>>>>>>>>>>" + request.prettyPrint)
-    val response = generateResponse(state)
-    println("OUR RESPONSE >>>>>>>>>>>>" + response)
-    response
+    try {
+      val state = request.convertTo[GameState]
+      println("REQUEST OBJECT >>>>>>>>>>>>" + request.prettyPrint)
+      val response = generateResponse(state)
+      println("OUR RESPONSE >>>>>>>>>>>>" + response)
+      response
+    } catch {
+      case e =>
+        println("=======++ error ++======")
+        e.printStackTrace()
+        0
+    }
   }
 
   def generateResponse(state: GameState): Int = {
