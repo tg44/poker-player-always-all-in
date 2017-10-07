@@ -41,18 +41,18 @@ class PlayerTest extends FunSpec with MustMatchers with JsonSupport {
     "minimum_raise": 240
   }"""
 
-  /*it("test bet request") {
+  it("test bet request") {
     val jsonElement = sample.parseJson
     Player.betRequest(jsonElement) must be (240)
   }
-*/
+
+
   it("can parse json") {
-
-
 
     val inJson = sample.parseJson
     inJson.convertTo[GameState]
 
   }
+
 
 }

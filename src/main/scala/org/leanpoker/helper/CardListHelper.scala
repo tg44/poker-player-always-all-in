@@ -9,8 +9,12 @@ object CardListHelper{
     cards.groupBy(_.rank).size != cards.size
   }
 
-  def isThereHigh(cards: Seq[Card]): Boolean = {
-    cards.exists(c => CardRank.hights.contains(c.rank))
+  def countHigh(cards: Seq[Card]): Int = {
+    cards.count(c => CardRank.hights.contains(c.rank))
+  }
+
+  def countMid(cards: Seq[Card]): Int = {
+    cards.count(c => CardRank.mid.contains(c.rank))
   }
 
   def hasRankInHand(rank: String, cards: Seq[Card]): Boolean = {
@@ -18,8 +22,14 @@ object CardListHelper{
   }
 
   def naiveAllIn(cards: Seq[Card]): Boolean = {
-    isThereAPairInThisList(cards) && isThereHigh(cards) ||
+    isThereAPairInThisList(cards) && countHigh(cards) > 0 ||
       hasRankInHand(CardRank.A, cards) && hasRankInHand(CardRank.K, cards)
+  }
+
+  def midrangeHand(cards: Seq[Card]): Boolean = {
+    isThereAPairInThisList(cards) && countMid(cards) > 0 ||
+      hasRankInHand(CardRank.A, cards) && countHigh(cards) > 1 ||
+      hasRankInHand(CardRank.K, cards) && hasRankInHand(CardRank.Q, cards)
   }
 }
 
@@ -47,4 +57,6 @@ object CardRank {
   val A = "A"
 
   val hights = Seq(A, K, Q, J, r10)
+
+  val mid = Seq(r9, r8, r7, r6, r5)
 }
