@@ -45,7 +45,7 @@ object Player extends JsonSupport {
     val me = state.me
     if (CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
     else if(state.playersInGame > 2) {
-      if (CardListHelper.midrangeHand(me.hole_cards.get) && state.affordableLoss) state.holdLicit
+      if (CardListHelper.midrangeHand(me.hole_cards.get)) state.holdLicit
       else 0
     } else {
       if(CardListHelper.notSoBadHand(me.hole_cards.get)){
