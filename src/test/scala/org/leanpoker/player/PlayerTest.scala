@@ -43,7 +43,7 @@ class PlayerTest extends FunSpec with MustMatchers with JsonSupport {
 
   it("test bet request") {
     val jsonElement = sample.parseJson
-//    Player.betRequest(jsonElement) must be (240)
+    Player.betRequest(jsonElement) must be (240)
   }
 
   it("can parse json") {

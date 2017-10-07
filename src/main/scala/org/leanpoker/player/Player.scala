@@ -9,7 +9,8 @@ object Player extends JsonSupport {
 
   def betRequest(request: JsValue) = {
     val state= request.convertTo[GameState]
-    state.minimum_raise
+    if(state.round == 0) 100
+    else state.players(state.in_action).stack
   }
 
   def showdown(game: JsValue) {
@@ -22,7 +23,7 @@ case class PlayerDto(name: String,
                   stack: Int,
                   status: String,
                   bet: Int,
-                  hole_cards: Seq[Card],
+                  hole_cards: Option[Seq[Card]],
                   version: String,
                   id: Int)
 
