@@ -37,9 +37,9 @@ case class PlayerDto(name: String,
                   id: Int)
 
 case class GameState(
-                    players: Seq[PlayerDto],
+                      players: Seq[PlayerDto],
                       tournament_id: String,
-                     game_id: String,
+                      game_id: String,
                       round: Int,
                       bet_index: Option[Int],
                       small_blind: Int,
