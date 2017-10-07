@@ -43,7 +43,8 @@ class PlayerTest extends FunSpec with MustMatchers with JsonSupport {
     "dealer":0,
     "community_cards":[],
     "current_buy_in":0,
-    "pot":0
+    "pot":0,
+    "in_action": 1
   }"""
 
     val inJson = sample.parseJson

@@ -3,7 +3,9 @@ package org.leanpoker.player
 import com.google.gson.JsonElement
 import spray.json.{DefaultJsonProtocol, JsValue, RootJsonFormat}
 
-object Player {
+object
+
+Player {
 
   val VERSION = "Default Scala folding player"
 
@@ -34,7 +36,8 @@ case class GameState(
                       dealer: Int,
                       community_cards: Seq[Card],
                       current_buy_in: Int,
-                      pot: Int
+                      pot: Int,
+                      in_action: Int
                     )
 
 case class Card(rank: String, suit: String)
@@ -43,5 +46,5 @@ trait JsonSupport extends DefaultJsonProtocol {
 
   implicit val cardJsonFormatter: RootJsonFormat[Card] = jsonFormat2(Card)
   implicit val playerJsonFormatter: RootJsonFormat[PlayerDto] = jsonFormat7(PlayerDto)
-  implicit val gameStateJsonFormatter: RootJsonFormat[GameState] = jsonFormat11(GameState)
+  implicit val gameStateJsonFormatter: RootJsonFormat[GameState] = jsonFormat12(GameState)
 }
