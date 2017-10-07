@@ -9,6 +9,12 @@ object Player extends JsonSupport {
 
   def betRequest(request: JsValue) = {
     val state= request.convertTo[GameState]
+    println("REQUEST OBJECT >>>>>>>>>>>>" + state);
+    val response = generateResponse(state)
+    println("OUR RESPONSE >>>>>>>>>>>>" + response);
+  }
+
+  def generateResponse(state: GameState): Int = {
     if(state.round == 0) 100
     else state.players(state.in_action).stack
   }
