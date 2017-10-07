@@ -8,7 +8,7 @@ object Player extends JsonSupport {
 
   val VERSION = "Default Scala folding player"
 
-  def betRequest(request: JsValue) = {
+  def betRequest(request: JsValue): Int = {
     val state= request.convertTo[GameState]
     println("REQUEST OBJECT >>>>>>>>>>>>" + request.prettyPrint);
     val response = generateResponse(state)
