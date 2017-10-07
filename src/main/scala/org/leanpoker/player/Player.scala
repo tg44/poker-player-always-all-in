@@ -39,7 +39,7 @@ case class GameState(
                       community_cards: Seq[Card],
                       current_buy_in: Int,
                       pot: Int,
-                      in_action: Int,
+                      in_action: Option[Int],
                       minimum_raise: Int
                     )
 
