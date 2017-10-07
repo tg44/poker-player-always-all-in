@@ -17,10 +17,16 @@ object Player extends JsonSupport {
   }
 
   def generateResponse(state: GameState): Int = {
-    val me = GameStateHelper.me(state)
-    if(CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
-    else if (CardListHelper.midrangeHand(me.hole_cards.get) && GameStateHelper.affordableLoss(state)) GameStateHelper.holdLicit(state)
-    else 0
+    val me = state.me
+    if (CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
+    else if(state.playersInGame > 2) {
+      if (CardListHelper.midrangeHand(me.hole_cards.get) && state.affordableLoss) state.holdLicit
+      else 0
+    } else {
+      if(CardListHelper.notSoBadHand(me.hole_cards.get)){
+        state.holdLicit
+      } else 0
+    }
   }
 
   def showdown(game: JsValue) {
@@ -51,21 +57,18 @@ case class GameState(
                       pot: Int,
                       in_action: Option[Int],
                       minimum_raise: Option[Int]
-                    )
+                    ) {
 
-case class Card(rank: String, suit: String)
-
-object GameStateHelper {
-  def me(gameState: GameState): PlayerDto = {
-    gameState.players(gameState.in_action.get)
+  def me: PlayerDto = {
+    players(in_action.get)
   }
 
-  def holdLicit(gameState: GameState): Int = {
-    gameState.current_buy_in - me(gameState).bet
+  def holdLicit: Int = {
+    current_buy_in - me.bet
   }
 
-  def raise(gameState: GameState, raiseAboveMinimum: Int = 0): Int = {
-    holdLicit(gameState)   + gameState.minimum_raise.get + raiseAboveMinimum
+  def raise(raiseAboveMinimum: Int = 0): Int = {
+    holdLicit + minimum_raise.get + raiseAboveMinimum
   }
 
   def whereAmI(gameState: GameState): Int = {
@@ -74,10 +77,19 @@ object GameStateHelper {
     else k
   }
 
-  def affordableLoss(gameState: GameState): Boolean = {
-    gameState.current_buy_in < me(gameState).stack*0.1
+  def affordableLoss: Boolean = {
+    current_buy_in < me.stack * 0.1
   }
 
+  def playersInGame: Int = {
+    players.count(p => p.bet + p.stack > 0)
+  }
+
+}
+
+case class Card(rank: String, suit: String)
+
+object GameStateHelper {
 
 }
 

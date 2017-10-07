@@ -21,6 +21,10 @@ object CardListHelper{
     cards.exists(_.rank == rank)
   }
 
+  def hasRanksInHand(rankA: String, rankB: String, cards: Seq[Card]): Boolean = {
+    hasRankInHand(rankA, cards) && hasRankInHand(rankB, cards)
+  }
+
   def naiveAllIn(cards: Seq[Card]): Boolean = {
     isThereAPairInThisList(cards) && countHigh(cards) > 0 ||
       hasRankInHand(CardRank.A, cards) && hasRankInHand(CardRank.K, cards)
@@ -30,6 +34,16 @@ object CardListHelper{
     isThereAPairInThisList(cards) && countMid(cards) > 0 ||
       hasRankInHand(CardRank.A, cards) && countHigh(cards) > 1 ||
       hasRankInHand(CardRank.K, cards) && hasRankInHand(CardRank.Q, cards)
+  }
+
+  def notSoBadHand(cards: Seq[Card]): Boolean = {
+    midrangeHand(cards) ||
+      hasRanksInHand(CardRank.A, CardRank.r9, cards) ||
+      hasRanksInHand(CardRank.K, CardRank.J, cards) ||
+      hasRanksInHand(CardRank.K, CardRank.r10, cards)||
+      hasRanksInHand(CardRank.Q, CardRank.J, cards)||
+      hasRanksInHand(CardRank.Q, CardRank.r10, cards)||
+      hasRanksInHand(CardRank.J, CardRank.r10, cards)
   }
 }
 
