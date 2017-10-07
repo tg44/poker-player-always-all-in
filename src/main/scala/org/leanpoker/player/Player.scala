@@ -17,6 +17,23 @@ object Player extends JsonSupport {
   }
 
   def generateResponse(state: GameState): Int = {
+    if(state.preflop) {
+      preFlopLogic(state)
+    } else {
+      val me = state.me
+      if(CardListHelper.isThereAPairInThisList(me.hole_cards.get ++ state.community_cards)) {
+        if(me.hole_cards.get.exists(_.rank == CardListHelper.biggestRankInList(state.community_cards))) {
+          me.stack
+        } else {
+          0
+        }
+      } else {
+        0
+      }
+    }
+  }
+
+  def preFlopLogic(state: GameState): Int = {
     val me = state.me
     if (CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
     else if(state.playersInGame > 2) {
@@ -83,6 +100,10 @@ case class GameState(
 
   def playersInGame: Int = {
     players.count(p => p.bet + p.stack > 0)
+  }
+
+  def preflop: Boolean = {
+    community_cards.isEmpty
   }
 
 }

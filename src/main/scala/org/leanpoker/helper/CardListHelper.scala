@@ -4,6 +4,9 @@ import org.leanpoker.player.{Card}
 
 object CardListHelper{
 
+  def biggestRankInList(cards: Seq[Card]): String = {
+    CardRank.all.find(cards.contains(_)).get
+  }
 
   def isThereAPairInThisList(cards: Seq[Card]): Boolean = {
     cards.groupBy(_.rank).size != cards.size
@@ -73,4 +76,8 @@ object CardRank {
   val hights = Seq(A, K, Q, J, r10)
 
   val mid = Seq(r9, r8, r7, r6, r5)
+
+  val others = Seq(r4, r3, r2)
+
+  val all = hights ++ mid ++ others
 }
