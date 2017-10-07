@@ -9,7 +9,7 @@ object Player extends JsonSupport {
 
   def betRequest(request: JsValue) = {
     val state= request.convertTo[GameState]
-    println("REQUEST OBJECT >>>>>>>>>>>>" + state);
+    println("REQUEST OBJECT >>>>>>>>>>>>" + request.prettyPrint);
     val response = generateResponse(state)
     println("OUR RESPONSE >>>>>>>>>>>>" + response);
   }
