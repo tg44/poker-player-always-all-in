@@ -10,7 +10,7 @@ object Player extends JsonSupport {
   def betRequest(request: JsValue) = {
     val state= request.convertTo[GameState]
     if(state.round == 0) 100
-    else state.players(state.in_action).stack
+    else state.players(state.in_action.get).stack
   }
 
   def showdown(game: JsValue) {
