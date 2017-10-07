@@ -1,6 +1,7 @@
 package org.leanpoker.player
 
 import com.google.gson.JsonElement
+import org.leanpoker.helper.CardListHelper
 import spray.json.{DefaultJsonProtocol, JsValue, RootJsonFormat}
 
 object Player extends JsonSupport {
@@ -15,8 +16,10 @@ object Player extends JsonSupport {
   }
 
   def generateResponse(state: GameState): Int = {
-    if(state.round == 0) 100
-    else state.players(state.in_action.get).stack
+    val me = GameStateHelper.me(state)
+    if(CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
+    else if(state.round == 0) 100
+    else 0
   }
 
   def showdown(game: JsValue) {
@@ -51,28 +54,11 @@ case class GameState(
 
 case class Card(rank: String, suit: String)
 
-object CardSuit {
-  val hearts = "hearts";
-  val spades = "spades";
-  val clubs = "clubs";
-  val diamonds = "diamonds";
-}
+object GameStateHelper {
+  def me(gameState: GameState): PlayerDto = {
+    gameState.players(gameState.in_action.get)
+  }
 
-object CardRank {
-  val r1 = "1"
-  val r2 = "2"
-  val r3 = "3"
-  val r4 = "4"
-  val r5 = "5"
-  val r6 = "6"
-  val r7 = "7"
-  val r8 = "8"
-  val r9 = "9"
-  val r10 = "10"
-  val J = "J"
-  val Q = "Q"
-  val K = "K"
-  val A = "A"
 }
 
 trait JsonSupport extends DefaultJsonProtocol {
