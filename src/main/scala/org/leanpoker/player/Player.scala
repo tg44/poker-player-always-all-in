@@ -46,11 +46,45 @@ object Player extends JsonSupport {
     }
   }
 
+//  def preFlopLogic2(state: GameState): Int = {
+//    val me = state.me
+//    val position = state.whereAmI(state)
+//    position match {
+//      case 3 => utgStrategy(state) //UTG
+//      case 4 | 0 => //early
+//      case 1 => //middle
+//      case 2 => //late
+//    }
+//
+//  }
+//
+//  def earlyPositionStrategy(state: GameState): Int = {
+//    val me = state.me
+//  }
+
+  def utgStrategy(state: GameState): Int = {
+    val me = state.me
+    if (CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
+    else if(state.playersInGame > 2) {
+      if (CardListHelper.midrangeHand(me.hole_cards.get) && state.affordableLoss) state.holdLicit
+      else 0
+    } else {
+      if(CardListHelper.notSoBadHand(me.hole_cards.get)){
+        state.holdLicit
+      } else 0
+    }
+  }
+
+
+
   def showdown(game: JsValue) {
     val state= game.convertTo[GameState]
   }
 }
 
+case class Strategy(state: GameState) {
+
+}
 
 case class PlayerDto(name: String,
                   stack: Int,
@@ -89,7 +123,7 @@ case class GameState(
   }
 
   def whereAmI(gameState: GameState): Int = {
-    val k = (gameState.in_action.get - gameState.dealer) % gameState.players.size
+    val k = (gameState.in_action.get - gameState.dealer) % gameState.players.count(_.status != "out")
     if(k<0) k + gameState.players.size
     else k
   }
