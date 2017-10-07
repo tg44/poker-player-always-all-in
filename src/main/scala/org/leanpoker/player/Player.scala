@@ -13,6 +13,7 @@ object Player extends JsonSupport {
     println("REQUEST OBJECT >>>>>>>>>>>>" + request.prettyPrint);
     val response = generateResponse(state)
     println("OUR RESPONSE >>>>>>>>>>>>" + response);
+    response
   }
 
   def generateResponse(state: GameState): Int = {
