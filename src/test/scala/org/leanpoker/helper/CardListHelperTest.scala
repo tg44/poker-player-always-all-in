@@ -5,9 +5,9 @@ import org.scalatest.{FunSpec, MustMatchers}
 
 class CardListHelperTest extends FunSpec with MustMatchers {
 
-  val noPairs: Seq[Card] = Seq(Card("K",Card.clubs));
+//  val noPairs: Seq[Card] = Seq(Card("K",Card.clubs));
 
-  it("should be true") {
-    CardListHelper.isThereAPairInThisList(null) mustBe true
-  }
+//  it("should be true") {
+//    CardListHelper.isThereAPairInThisList(null) mustBe true
+//  }
 }
