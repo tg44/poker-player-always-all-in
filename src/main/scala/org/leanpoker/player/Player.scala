@@ -19,7 +19,7 @@ object Player extends JsonSupport {
   def generateResponse(state: GameState): Int = {
     val me = GameStateHelper.me(state)
     if(CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
-    else if (CardListHelper.midrangeHand(me.hole_cards.get)) state.minimum_raise.get
+    else if (CardListHelper.midrangeHand(me.hole_cards.get)) GameStateHelper.holdLicit(state)
     else 0
   }
 
@@ -58,6 +58,14 @@ case class Card(rank: String, suit: String)
 object GameStateHelper {
   def me(gameState: GameState): PlayerDto = {
     gameState.players(gameState.in_action.get)
+  }
+
+  def holdLicit(gameState: GameState): Int = {
+    gameState.current_buy_in - me(gameState).bet
+  }
+
+  def raise(gameState: GameState, raiseAboveMinimum: Int = 0): Int = {
+    holdLicit(gameState)   + gameState.minimum_raise.get + raiseAboveMinimum
   }
 
 }
