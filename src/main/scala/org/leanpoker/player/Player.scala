@@ -19,7 +19,7 @@ object Player extends JsonSupport {
   def generateResponse(state: GameState): Int = {
     val me = state.me
 
-    if(state.playersInGame > 2) {
+    if(state.playersInGame > 3) {
       if (CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack / 2
       else
         0
