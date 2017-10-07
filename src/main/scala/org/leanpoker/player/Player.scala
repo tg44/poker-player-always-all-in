@@ -6,7 +6,7 @@ import spray.json.{DefaultJsonProtocol, JsValue, RootJsonFormat}
 
 object Player extends JsonSupport {
 
-  val VERSION = "Default Scala folding player"
+  val VERSION = "haha we always all in xD"
 
   def betRequest(request: JsValue): Int = {
     val state= request.convertTo[GameState]
@@ -19,7 +19,7 @@ object Player extends JsonSupport {
   def generateResponse(state: GameState): Int = {
     val me = GameStateHelper.me(state)
     if(CardListHelper.naiveAllIn(me.hole_cards.get)) me.stack
-    else if (CardListHelper.midrangeHand(me.hole_cards.get)) GameStateHelper.holdLicit(state)
+    else if (CardListHelper.midrangeHand(me.hole_cards.get) && GameStateHelper.affordableLoss(state)) GameStateHelper.holdLicit(state)
     else 0
   }
 
@@ -67,6 +67,17 @@ object GameStateHelper {
   def raise(gameState: GameState, raiseAboveMinimum: Int = 0): Int = {
     holdLicit(gameState)   + gameState.minimum_raise.get + raiseAboveMinimum
   }
+
+  def whereAmI(gameState: GameState): Int = {
+    val k = (gameState.in_action.get - gameState.dealer) % gameState.players.size
+    if(k<0) k + gameState.players.size
+    else k
+  }
+
+  def affordableLoss(gameState: GameState): Boolean = {
+    gameState.current_buy_in < me(gameState).stack*0.1
+  }
+
 
 }
 
