@@ -5,7 +5,7 @@ import org.leanpoker.player.{Card}
 object CardListHelper{
 
   def biggestRankInList(cards: Seq[Card]): String = {
-    CardRank.all.find(cards.contains(_)).get
+    CardRank.all.find(c => cards.exists(c2 => c2.rank == c)).get
   }
 
   def isThereAPairInThisList(cards: Seq[Card]): Boolean = {
